@@ -1,9 +1,13 @@
 <script>
 import _ from "lodash";
 import SelectedImage from "./components/SelectedImage.vue";
+import ColorOptionsCard from "./components/ColorOptionsCard.vue";
+import SizeCard from "./components/SizeCard.vue";
+import TitleCard from "./components/TitleCard.vue";
+import CounterCard from "./components/CounterCard.vue";
 
 export default {
-  components: {SelectedImage},
+  components: {CounterCard, TitleCard, SizeCard, ColorOptionsCard, SelectedImage},
   data() {
     return {
       product: {
@@ -2859,54 +2863,12 @@ export default {
       <selected-image :image="selected.image"></selected-image>
     </div>
     <div class="rightContainer">
-      <div class="flex pb-3 justify-between text-3xl font-bold text-primary">
-        <div>
-          <h3>GM-32 Solid</h3>
-          <h4 class="text-2xl">{{ activeItem.sku }}</h4>
-        </div>
-        <h3 class="hidden text-black xl:w-1/5 xl:block">$79.95</h3>
-      </div>
-        <div class="pb-3 text-2xl">
-          <h3>Color Options:</h3>
-        </div>
-        <div class="grid grid-cols-3  xs:w-2/3 sm:w-1/2 xl:w-full">
-          <div v-for="color in colors" :key="color"
-               @click="addColorAttributes(color)">
-            <div class="relative w-20 mb-5">
-                <button
-                    class="flex items-center justify-center h-20 border-2 rounded-full border-light">
-                  <img
-                      class="max-w-full max-h-full p-2 mx-auto my-auto cursor-pointer min-h-1/3 min-w-1/2 rounded-3xl"
-                      :src="color.image"/>
-                </button>
-                <div class="absolute w-32 text-xs text-center capitalize opacity-0 colorName whitespace-nowrap">
-                  {{ color.name }}
-                </div>
-            </div>
+      <title-card :sku="activeItem.sku"></title-card>
+      <color-options-card :colors="colors" :add-color-attributes="addColorAttributes"></color-options-card>
+      <size-card :sizes="sizes" :update-attributes="updateAttributes"></size-card>
+            <counter-card></counter-card>
           </div>
         </div>
-      <div>
-        <div class="py-5">
-          <div class="pb-3">
-            <h1 class="text-2xl">Size:</h1>
-          </div>
-          <div class="flex border-2 rounded-full border-light w-fc">
-            <div>
-              <button
-                  class="px-3 py-3 uppercase border-r-2 cursor-pointer last:border-r-0 last:rounded-r-full first:rounded-l-full border-light sizeOption"
-                  v-for="size in sizes"
-                  :key="size"
-                  @click="updateAttributes('13', size.id)">
-                <h2>{{ size.name }}</h2>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
 </template>
 
 <style>
@@ -2945,7 +2907,10 @@ h3 {
   font-weight: 600;
   text-transform: uppercase;
 }
-
+.colorName {
+  margin-left: -24px;
+  transition: opacity .25s ease;
+}
 </style>
 
 
